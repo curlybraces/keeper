@@ -5,8 +5,38 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <h1>Your Passwords</h1>
+        <h1>Your Logins</h1>
         <hr />
-        
+        <a href="/new">New Login</a>
+        <br />
+        <br />
+        {% for login in logins %}
+        <div class="login">
+            <div class="name">
+                <b>{{login.name}}</b>:
+            </div>
+            <div class="username">
+                Username: {{login.username}}
+            </div>
+            <div class="password">
+                Password: <input id="password#{{login.id}}" type="password" value="{{login.password}}" />
+                Show / Hide: <input type="checkbox" onclick="toggleView('{{login.id}}')" />
+            </div>
+        </div>
+        <br />
+        {% endfor %}
     </body>
+    <script>
+        function toggleView(id) {
+            const elem = document.getElementById('password#' + id)
+            const type = elem.getAttribute('type')
+
+            if(type === 'password') {
+                elem.setAttribute('type','text')
+                return
+            }
+
+            elem.setAttribute('type','password')
+        }
+    </script>
 </html>

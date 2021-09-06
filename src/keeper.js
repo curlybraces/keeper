@@ -33,6 +33,7 @@ nunjucks.configure(path.join(__dirname,'../views/'),{
 app.use('/',require('./routes/index'))
 app.use('/login',require('./routes/login'))
 app.use('/signup',require('./routes/signup'))
+app.use('/new',require('./routes/new'))
 
 // Setup HTTPS server based on environment variables
 

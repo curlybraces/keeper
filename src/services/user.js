@@ -19,8 +19,8 @@ async function NewUser({username,password}) {
         const salt = Buffer.from(crypto.randomBytes(16),'utf-8')
         const dek = crypto.randomBytes(32)
 
-        const key = crypto.pbkdf2Sync(password,salt,parseInt(process.env.PBKDF2_ITERATIONS),32,'sha512')
-        const cipher = crypto.createCipheriv('aes-256-gcm',key,salt)
+        const kek = crypto.pbkdf2Sync(password,salt,parseInt(process.env.PBKDF2_ITERATIONS),32,'sha512')
+        const cipher = crypto.createCipheriv('aes-256-gcm',kek,salt)
         const encryptedDEK = Buffer.concat([cipher.update(dek),cipher.final()])
         const formattedDEK = salt.toString('hex') + '$' + encryptedDEK.toString('hex') + '$' + cipher.getAuthTag().toString('hex')
 
@@ -59,13 +59,12 @@ async function Login({username,password}) {
         eDEK = Buffer.from(eDEK,'hex')
         authTag = Buffer.from(authTag,'hex')
 
-        const key = crypto.pbkdf2Sync(password,salt,parseInt(process.env.PBKDF2_ITERATIONS),32,'sha512')
-        const cipher = crypto.createDecipheriv('aes-256-gcm',key,salt)
+        const kek = crypto.pbkdf2Sync(password,salt,parseInt(process.env.PBKDF2_ITERATIONS),32,'sha512')
+        const cipher = crypto.createDecipheriv('aes-256-gcm',kek,salt)
 
         cipher.setAuthTag(authTag)
 
         const dek = Buffer.concat([cipher.update(eDEK,'hex'),cipher.final()])
-
         const result = await bcrypt.compare(password,hash)
 
         if(!result) {
