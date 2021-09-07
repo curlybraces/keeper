@@ -55,7 +55,7 @@ npm start
 or using [PM2](https://pm2.keymetrics.io/) for running as a service
 ```bash
 cd /path/to/keeper
-pm2 start src/keeper.js
+pm2 start
 ```
 
 ## To-Do
