@@ -47,7 +47,18 @@ PBKDF2_ITERATIONS=100000
 # or if you know what you're doing)
 ```
 
-### To-Do
+## Starting Keeper
+```bash
+cd /path/to/keeper
+npm start
+```
+or using [PM2](https://pm2.keymetrics.io/) for running as a service
+```bash
+cd /path/to/keeper
+pm2 start src/keeper.js
+```
+
+## To-Do
 Keeper is brand new, and subject to a lot of changes
 
 * Better Documentation
