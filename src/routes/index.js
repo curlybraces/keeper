@@ -1,5 +1,4 @@
 const {GetLogins} = require('../services/login')
-
 const router = require('express').Router()
 
 router.get('/',async (req,res) => {

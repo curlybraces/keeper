@@ -1,23 +1,40 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Keeper - New Password</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Keeper - New Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="/static/css/form.css" />
     </head>
     <body>
-        <form action="/new" method="POST">
-            <h2>New Login</h2>
-            <input name="name" placeholder="Name" />
-            <br />
-            <input name="username" placeholder="Username" />
-            <br />
-            <input name="password" placeholder="Password" type="password" />
-            <br />
-            <button type="submit">Create Login</button>
-            {% if message %}
-            <div>{{message}}</div>
-            {% endif %}
-            <br />
-        </form>
+        <div id="content">
+            <form id="form" action="/new" method="POST">
+                <h2>Add a New Login</h2>
+                <hr />
+                <div class="field">
+                    <b>Name:</b>
+                    <br />
+                    <input name="name" placeholder="Login Name" />
+                </div>
+                <div class="field">
+                    <b>Login Username:</b>
+                    <br />
+                    <input name="username" placeholder="Login Username" />
+                </div>
+                <div class="field">
+                    <b>Login Password:</b>
+                    <br />
+                    <input name="password" placeholder="Login Password" type="password" />
+                </div>
+                <div class="field">
+                    <button type="submit">Add New Login</button>
+                </div>
+                <br />
+                <a href="/">Home</a>
+                {% if message %}
+                <div class="field error">{{message}}</div>
+                {% endif %}
+                <br />
+            </form>
+        </div>
     </body>
 </html>

@@ -6,9 +6,7 @@ router.get('/',(req,res) => {
         return res.status(409).redirect('/')
     }
 
-    res.render('signup.html',{
-        message:null
-    })
+    res.render('signup.html',{message:null})
 })
 
 router.post('/',async (req,res) => {

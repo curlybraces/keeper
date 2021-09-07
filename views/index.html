@@ -2,41 +2,53 @@
 <html>
     <head>
         <title>Keeper - Home</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="/static/css/home.css" />
+        <link rel="stylesheet" type="text/css" href="/static/css/jquery.dataTables.min.css" />
     </head>
     <body>
-        <h1>Your Logins</h1>
-        <hr />
-        <a href="/new">New Login</a>
-        <br />
-        <br />
-        {% for login in logins %}
-        <div class="login">
-            <div class="name">
-                <b>{{login.name}}</b>:
+        <a href="/new">Add New Login</a>
+        <h2>Logins</h2>
+        <table id="logins" class="display" style="width:100%;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for login in logins %}
+                <tr id="row-{{login.id}}">
+                    <td>{{login.name}}</td>
+                    <td>{{login.username}}</td>
+                    <td>
+                        <input id="{{login.id}}" class="toggleInput" type="password" value="{{login.password}}" />
+                        <button onclick="toggleView('{{login.id}}')">Toggle</button>
+                        <button onclick="copy('{{login.id}}')">Copy</button>
+                        <button onclick="remove('{{login.id}}')">Remove</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- <div id="logins">
+            {% for login in logins %}
+            <div class="login">
+                <div class="name">{{login.name}}</div>
+                -
+                <div class="username">{{login.username}}</div>
+                <div class="password">
+                    <input id="password#{{login.id}}" type="password" value="{{login.password}}" />
+                    <br />
+                    Show / Hide: <input type="checkbox" onclick="toggleView('{{login.id}}')" />
+                </div>
             </div>
-            <div class="username">
-                Username: {{login.username}}
-            </div>
-            <div class="password">
-                Password: <input id="password#{{login.id}}" type="password" value="{{login.password}}" />
-                Show / Hide: <input type="checkbox" onclick="toggleView('{{login.id}}')" />
-            </div>
-        </div>
-        <br />
-        {% endfor %}
+            <br />
+            {% endfor %}
+        </div> -->
     </body>
-    <script>
-        function toggleView(id) {
-            const elem = document.getElementById('password#' + id)
-            const type = elem.getAttribute('type')
-
-            if(type === 'password') {
-                elem.setAttribute('type','text')
-                return
-            }
-
-            elem.setAttribute('type','password')
-        }
-    </script>
+    <script src="/static/js/jquery-3.6.0.min.js"></script>
+    <script src="/static/js/jquery.dataTables.min.js"></script>
+    <script src="/static/js/index.js"></script>
 </html>

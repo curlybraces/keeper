@@ -49,16 +49,31 @@ async function NewLogin({name,username,password,session}) {
         const encryptedLogin = Buffer.concat([cipher.update(JSON.stringify({name,username,password})),cipher.final()])
         const formattedData = salt.toString('hex') + '$' + encryptedLogin.toString('hex') + '$' + cipher.getAuthTag().toString('hex')
 
-        await client.query('INSERT INTO logins (id,owner,data) VALUES ($1,$2,$3)',[uuidv4(),session.username,formattedData])
+        const result = await client.query('INSERT INTO logins (id,owner,data) VALUES ($1,$2,$3)',[uuidv4(),session.username,formattedData])
+
         await client.release()
 
-        return Promise.resolve(true)
+        return Promise.resolve(result)
+    } catch(err) {
+        return Promise.reject(err)
+    }
+}
+
+async function RemoveLogin({owner,id}) {
+    try {
+        const client = await pool.connect()
+        const result = await client.query('DELETE FROM logins WHERE owner=$1 AND id=$2',[owner,id])
+        
+        await client.release()
+
+        return Promise.resolve(result)
     } catch(err) {
         return Promise.reject(err)
     }
 }
 
 module.exports = {
+    RemoveLogin,
     GetLogins,
     NewLogin
 }

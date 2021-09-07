@@ -17,9 +17,16 @@ async function NewUser({username,password}) {
         }
 
         const salt = Buffer.from(crypto.randomBytes(16),'utf-8')
-        const dek = crypto.randomBytes(32)
+        // dek (Data Encryption Key): the key used to encrypt/decrypt all user generated data
+        const dek = crypto.randomBytes(32) 
 
-        const kek = crypto.pbkdf2Sync(password,salt,parseInt(process.env.PBKDF2_ITERATIONS),32,'sha512')
+        /* 
+        kek (Key Encryption Key)
+        
+        The kek is the key used to encrypt/decrypt user keys.
+        This key is derived from the user's plaintext password.
+        */
+        const kek = crypto.pbkdf2Sync(password,salt,parseInt(process.env.PBKDF2_ITERATIONS),32,'sha512') 
         const cipher = crypto.createCipheriv('aes-256-gcm',kek,salt)
         const encryptedDEK = Buffer.concat([cipher.update(dek),cipher.final()])
         const formattedDEK = salt.toString('hex') + '$' + encryptedDEK.toString('hex') + '$' + cipher.getAuthTag().toString('hex')
