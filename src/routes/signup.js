@@ -1,4 +1,4 @@
-const {NewUser} = require('../services/user')
+const {Signup} = require('../services/user')
 const router = require('express').Router()
 
 router.get('/',(req,res) => {
@@ -15,7 +15,7 @@ router.post('/',async (req,res) => {
             return res.status(409).redirect('/')
         }
 
-        const result = await NewUser({
+        const result = await Signup({
             username:req.body.username,
             password:req.body.password
         })

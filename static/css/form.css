@@ -30,3 +30,7 @@ a {
 .error {
     color:maroon;
 }
+
+input[type="checkbox"] {
+    margin-right:-30%;
+}

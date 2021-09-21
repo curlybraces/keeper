@@ -1,4 +1,4 @@
-const {GetLogins} = require('../services/login')
+const {getLogins} = require('../services/login')
 const router = require('express').Router()
 
 router.get('/',async (req,res) => {
@@ -7,9 +7,7 @@ router.get('/',async (req,res) => {
             return res.status(401).redirect('/login')
         }
     
-        const logins = await GetLogins({
-            session:req.session
-        })
+        const logins = await getLogins({session:req.session})
 
         res.render('index.html',{logins})
     } catch(err) {

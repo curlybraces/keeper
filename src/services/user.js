@@ -2,7 +2,7 @@ const pool = require('../lib/pool')
 const bcrypt = require('bcrypt')
 const crypto = require('crypto')
 
-async function NewUser({username,password}) {
+async function Signup({username,password}) {
     try {
         const hash = await bcrypt.hash(password,parseInt(process.env.BCRYPT_ROUNDS))
         const client = await pool.connect()
@@ -94,6 +94,6 @@ async function Login({username,password}) {
 }
 
 module.exports = {
-    NewUser,
+    Signup,
     Login
 }

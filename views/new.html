@@ -23,8 +23,27 @@
                 <div class="field">
                     <b>Login Password:</b>
                     <br />
-                    <input name="password" placeholder="Login Password" type="password" />
+                    <input id="password" name="password" placeholder="Login Password" type="password" />
+                    <br />
+                    <button type="button" onclick="toggleVisibility('generator')">Generate</button>
+                    <button type="button" onclick="toggleView('password')">Toggle</button>
+                    <button type="button" onclick="copy('password')">Copy</button>
                 </div>
+                <div id="generator" style="display:none;">
+                    <br />
+                    <div id="activeLength">Length: 8</div>
+                    1<input id="length" type="range" min="1" max="128" value="8" />128
+                    <br />
+                    <input id="uppercase" type="checkbox" checked /> A-Z
+                    <br />
+                    <input id="lowercase" type="checkbox" checked /> a-z
+                    <br />
+                    <input id="numbers" type="checkbox" checked /> 0-9
+                    <br />
+                    <input id="special" type="checkbox" checked /> !@#$%^&*
+                    <br />
+                </div>
+                <br />
                 <div class="field">
                     <button type="submit">Add New Login</button>
                 </div>
@@ -36,5 +55,8 @@
                 <br />
             </form>
         </div>
+        <script src="/static/js/jquery-3.6.0.min.js"></script>
+        <script src="/static/js/index.js"></script>
+        <script src="/static/js/new.js"></script>
     </body>
 </html>

@@ -1,4 +1,4 @@
-const {RemoveLogin} = require('../services/login')
+const {removeLogin} = require('../services/login')
 const router = require('express').Router()
 
 router.post('/:id',async (req,res) => {
@@ -7,7 +7,7 @@ router.post('/:id',async (req,res) => {
             return res.status(401).redirect('/login')
         }
     
-        await RemoveLogin({
+        await removeLogin({
             owner:req.session.username,
             id:req.params.id
         })

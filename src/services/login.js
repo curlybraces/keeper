@@ -2,7 +2,7 @@ const {v4:uuidv4} = require('uuid')
 const pool = require('../lib/pool')
 const crypto = require('crypto')
 
-async function GetLogins({session}) {
+async function getLogins({session}) {
     try {
         const client = await pool.connect()
         const query = await client.query('SELECT * FROM logins WHERE owner=$1',[session.username])
@@ -38,7 +38,7 @@ async function GetLogins({session}) {
     }
 }
 
-async function NewLogin({name,username,password,session}) {
+async function newLogin({name,username,password,session}) {
     try {
         const client = await pool.connect()
 
@@ -59,7 +59,7 @@ async function NewLogin({name,username,password,session}) {
     }
 }
 
-async function RemoveLogin({owner,id}) {
+async function removeLogin({owner,id}) {
     try {
         const client = await pool.connect()
         const result = await client.query('DELETE FROM logins WHERE owner=$1 AND id=$2',[owner,id])
@@ -73,7 +73,7 @@ async function RemoveLogin({owner,id}) {
 }
 
 module.exports = {
-    RemoveLogin,
-    GetLogins,
-    NewLogin
+    removeLogin,
+    getLogins,
+    newLogin
 }
