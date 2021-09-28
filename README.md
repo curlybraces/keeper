@@ -8,7 +8,7 @@ Keeper is a password manager that uses a special form of [Key Derivation](https:
 
 ## Installation
 
-Requirements: [node.js & npm](https://nodejs.org/en/) [postgres](https://www.postgresql.org/download/)
+Requirements: [node.js & npm](https://nodejs.org/en/) - [postgres](https://www.postgresql.org/download/)
 
 ```bash
 git clone https://github.com/devhsoj/keeper.git
