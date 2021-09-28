@@ -16,8 +16,6 @@ async function Signup({username,password}) {
             })
         }
 
-        console.log(password)
-
         const salt = Buffer.from(crypto.randomBytes(16),'utf-8')
         const dek = Buffer.from(crypto.randomBytes(32),'utf-8')
 
