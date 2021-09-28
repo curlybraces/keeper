@@ -42,7 +42,7 @@ async function newLogin({name,username,password,session}) {
     try {
         const client = await pool.connect()
 
-        const salt = Buffer.from(crypto.randomBytes(16),'utf-8')
+        const salt = Buffer.from(crypto.randomBytes(16))
 
         const kek = crypto.pbkdf2Sync(Buffer.from(session.dek),salt,parseInt(process.env.PBKDF2_ITERATIONS),32,'sha512')
         const cipher = crypto.createCipheriv('aes-256-gcm',kek,salt)
