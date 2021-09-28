@@ -16,16 +16,22 @@ async function Signup({username,password}) {
             })
         }
 
-        const salt = Buffer.from(crypto.randomBytes(16))
-        const dek = crypto.randomBytes(32) 
+        console.log(password)
+
+        const salt = Buffer.from(crypto.randomBytes(16),'utf-8')
+        const dek = Buffer.from(crypto.randomBytes(32),'utf-8')
 
         const kek = crypto.pbkdf2Sync(password,salt,parseInt(process.env.PBKDF2_ITERATIONS),32,'sha512') 
         const cipher = crypto.createCipheriv('aes-256-gcm',kek,salt)
-        const encryptedDEK = Buffer.concat([cipher.update(dek),cipher.final()])
+        const encryptedDEK = Buffer.concat([
+            cipher.update(dek),
+            cipher.final()
+        ])
         const formattedDEK = salt.toString('hex') + '$' + encryptedDEK.toString('hex') + '$' + cipher.getAuthTag().toString('hex')
 
         await client.query('INSERT INTO users (username,password,dek) VALUES ($1,$2,$3)',[username,hash,formattedDEK])
-        await client.release()
+        
+        client.release()
 
         return Promise.resolve({
             dek,
@@ -55,16 +61,20 @@ async function Login({username,password}) {
 
         let [salt,eDEK,authTag] = encryptedDEK.split('$')
 
-        salt = Buffer.from(salt,'hex')
-        eDEK = Buffer.from(eDEK,'hex')
-        authTag = Buffer.from(authTag,'hex')
+        salt = Buffer.from(Buffer.from(salt,'hex'),'utf-8')
+        eDEK =  Buffer.from(Buffer.from(eDEK,'hex'),'utf-8')
+        authTag =  Buffer.from(Buffer.from(authTag,'hex'),'utf-8')
 
         const kek = crypto.pbkdf2Sync(password,salt,parseInt(process.env.PBKDF2_ITERATIONS),32,'sha512')
         const cipher = crypto.createDecipheriv('aes-256-gcm',kek,salt)
 
         cipher.setAuthTag(authTag)
 
-        const dek = Buffer.concat([cipher.update(eDEK,'hex'),cipher.final()])
+        const dek = Buffer.concat([
+            cipher.update(eDEK),
+            cipher.final()
+        ])
+
         const result = await bcrypt.compare(password,hash)
 
         if(!result) {
@@ -74,7 +84,7 @@ async function Login({username,password}) {
             })
         }
 
-        await client.release()
+        client.release()
 
         return Promise.resolve({
             dek,
