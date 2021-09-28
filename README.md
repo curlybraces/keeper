@@ -1,6 +1,6 @@
 # Keeper
 
-Keeper is a simple, secure web based password manager that uses key derivation. 
+A simple, secure, and easy to use web based password manager.
 
 ## How it works
 
