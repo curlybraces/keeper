@@ -4,11 +4,11 @@ Keeper is a simple, secure web based password manager that uses key derivation.
 
 ## How it works
 
-Keeper is a password manager that uses a form of [Key Derivation](https://en.wikipedia.org/wiki/Key_derivation_function) to securely store user data (logins). User data is encrypted with the standard `AES-256-GCM` algorithm that uses randomly generated 32 byte keys *(DEK (Data Encryption Key))*. These randomly generated 32 byte keys are stored encrypted with a *DK/KEK (Derived Key / Key Encryption Key)* derived using `pbkdf2`, passed with the user's plaintext password. 
+Keeper is a password manager that uses a special form of [Key Derivation](https://en.wikipedia.org/wiki/Key_derivation_function) to securely store user logins. User data is encrypted with the standard `AES-256-GCM` algorithm that uses randomly generated 32 byte keys *(DEK (Data Encryption Key))* that is generated when a user signs up. These randomly generated 32 byte keys are stored encrypted with a *DK/KEK (Derived Key / Key Encryption Key)* derived using `pbkdf2` and the user's plaintext password, making the only way for data to be encrypted / decrypted is by knowing the user's password. 
 
 ## Installation
 
-Requirements: `nodejs` `npm` `postgres`
+Requirements: [node.js & npm](https://nodejs.org/en/) [postgres](https://www.postgresql.org/download/)`
 
 ```bash
 git clone https://github.com/devhsoj/keeper.git
@@ -58,13 +58,14 @@ cd /path/to/keeper
 pm2 start
 ```
 
-## To-Do
+## Roadmap
 Keeper is brand new, and subject to a lot of changes
 
 * Better Documentation
-* Better UI/UX - not very good at front end sorry :(
+* Better UI/UX
 * Sharing logins
 * Different categories of logins
+* Searching logins
 * Favorites
 * Trash
 * Backups
